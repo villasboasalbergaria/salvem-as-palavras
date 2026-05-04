@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salvem as Palavras — Adote uma palavra em extinção</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1410;--p:#f5f0e8;--p2:#ede7d8;--p3:#e3dbc8;--rust:#8b3a2a;--rust2:#c0562a;--gold:#9a7b3a;--gold2:#c4a45a;--muted:#6b5d4f;--muted2:#9a8c7e;--border:rgba(155,130,90,.25)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--p);color:var(--ink);font-family:'Crimson Pro',Georgia,serif;min-height:100vh;overflow-x:hidden}
+.hero{position:relative;text-align:center;padding:3.5rem 2rem 2.5rem;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#ede5d0 0%,var(--p) 100%)}
+.hero::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
+.hero-orn{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);letter-spacing:.4em;text-transform:uppercase;margin-bottom:1rem;opacity:.7}
+.hero-title{font-family:'Cinzel',serif;font-size:clamp(2.2rem,6vw,4.5rem);font-weight:700;color:var(--rust);line-height:.95;margin-bottom:.9rem}
+.hero-title span{color:var(--ink);font-weight:400}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.2vw,1.35rem);font-style:italic;color:var(--muted);margin-bottom:1.5rem;line-height:1.5}
+.hero-cnt{display:inline-block;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid var(--border);padding:.45rem 1.2rem;border-radius:2px}
+.hero-cnt strong{color:var(--rust);font-size:1rem}
+.about{max-width:700px;margin:0 auto;padding:2.5rem 2rem;border-bottom:1px solid var(--border)}
+.abtog{display:flex;align-items:center;gap:.75rem;cursor:pointer;user-select:none}
+.abtog-title{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+.abtog-icon{margin-left:auto;color:var(--muted2);font-size:.75rem;transition:transform .3s}
+.abtog.open .abtog-icon{transform:rotate(180deg)}
+.abbody{display:none;padding-top:1.5rem}
+.abbody.open{display:block}
+.abbody p{font-size:1.05rem;line-height:1.9;color:var(--muted);margin-bottom:1.1rem}
+.abbody p:last-child{margin-bottom:0}
+.abbody strong{color:var(--rust);font-weight:600}
+.abbody em{font-style:italic;color:var(--ink)}
+.adiv{width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);margin:1.2rem auto}
+.qdq-b{max-width:700px;margin:0 auto;padding:1.2rem 2rem;border-bottom:1px solid var(--border)}
+.qdq-lk{display:flex;align-items:center;justify-content:center;gap:1rem;padding:.85rem 1.2rem;background:var(--p2);border:1px solid var(--border);border-radius:3px;text-decoration:none;transition:border-color .2s,background .2s}
+.qdq-lk:hover{border-color:var(--gold2);background:var(--p3)}
+.qdq-lbl{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted2)}
+.qdq-tit{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--rust)}
+.qdq-arr{color:var(--gold);font-size:.9rem;margin-left:auto}
+.hint{text-align:center;padding:.8rem;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2)}
+#wc{display:block;width:100%;cursor:default}
+.mute{position:fixed;bottom:1.5rem;right:1.5rem;z-index:50;background:var(--p2);border:1px solid var(--border);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;box-shadow:0 2px 12px rgba(0,0,0,.12);transition:border-color .2s}
+.mute:hover{border-color:var(--gold2)}
+.ov{display:none;position:fixed;inset:0;background:rgba(20,15,10,.55);backdrop-filter:blur(3px);z-index:100;align-items:center;justify-content:center;padding:1.5rem}
+.ov.open{display:flex}
+.modal{background:var(--p);border:1px solid var(--border);border-radius:4px;padding:2.2rem;max-width:500px;width:100%;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.22);animation:mIn .22s ease both}
+@keyframes mIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.mc{position:absolute;top:.9rem;right:1.1rem;background:none;border:none;cursor:pointer;font-size:1.1rem;color:var(--muted2);transition:color .15s}
+.mc:hover{color:var(--rust)}
+.morn{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted2);margin-bottom:.7rem}
+.mwrd{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:700;color:var(--rust);line-height:1;margin-bottom:.9rem}
+.mdiv{width:36px;height:1px;background:var(--gold2);margin-bottom:.9rem}
+.mmean{font-family:'Cormorant Garamond',serif;font-size:1.18rem;line-height:1.75;color:var(--ink);font-style:italic;margin-bottom:.6rem}
+.msrc{font-size:.78rem;color:var(--muted2);margin-bottom:1.5rem}
+.af{border-top:1px solid var(--border);padding-top:1.3rem}
+.af label{display:block;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted2);margin-bottom:.45rem}
+.af input{width:100%;padding:.6rem .9rem;background:var(--p2);border:1px solid var(--border);border-radius:3px;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--ink);outline:none;transition:border-color .2s}
+.af input:focus{border-color:var(--gold2)}
+.af input::placeholder{color:var(--muted2);font-style:italic}
+.ba{margin-top:.75rem;width:100%;padding:.75rem;background:var(--rust);border:none;border-radius:3px;font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--p);cursor:pointer;transition:background .2s}
+.ba:hover{background:var(--rust2)}
+#cc{display:none}
+footer{border-top:1px solid var(--border);text-align:center;padding:1.8rem;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted2)}
+footer a{color:var(--gold);text-decoration:none}
+footer a:hover{color:var(--rust)}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-orn">✦ &nbsp; Uma iniciativa do Quem Disse o Quê &nbsp; ✦</div>
+  <h1 class="hero-title">Salvem<br><span>as</span> Palavras</h1>
+  <div class="hero-sub">Adote uma palavra em extinção.<br>Comprometa-se a usá-la. Preserve nossa língua.</div>
+  <div class="hero-cnt"><strong>353</strong> &nbsp; palavras esperando para serem salvas por você</div>
+</div>
+<div class="about">
+  <div class="abtog" id="abtog"><div class="abtog-title">✦ &nbsp; A história deste projeto</div><div class="abtog-icon">▾</div></div>
+  <div class="abbody" id="abbody">
+    <p>Em <strong>2010</strong>, o Oxford English Dictionary lançou o <em>Save the Words</em> — um site onde palavras raras do inglês pediam para ser adotadas. A tela era uma nuvem viva de palavras que literalmente chamavam pelo visitante. Quem escolhia uma palavra assinava um compromisso simbólico: usá-la no dia a dia, trazê-la de volta à vida.</p>
+    <div class="adiv"></div>
+    <p>O <em>Save the Words</em> foi encerrado anos depois. Mas a ideia ficou. E a língua portuguesa merecia ter o seu.</p>
+    <p><strong>Salvem as Palavras</strong> é uma iniciativa do <strong>Quem Disse o Quê</strong>, o dicionário de frases e citações que nasceu em 2002 e reúne hoje mais de 92 mil registros da sabedoria humana. É natural que os guardiões das melhores frases sejam também os guardiões das melhores palavras.</p>
+    <p>Aqui você encontra <strong>353 palavras</strong> da língua portuguesa que correm risco de desaparecer. Escolha uma. Adote-a. Receba seu certificado. E leve-a de volta ao mundo.</p>
+  </div>
+</div>
+<div class="qdq-b">
+  <a class="qdq-lk" href="https://villasboasalbergaria.github.io/quem-disse-oque" target="_blank">
+    <div><div class="qdq-lbl">Uma iniciativa de</div><div class="qdq-tit">Quem Disse o Quê — Dicionário de Frases e Citações</div></div>
+    <div class="qdq-arr">→</div>
+  </a>
+</div>
+<div class="hint">Clique em uma palavra para conhecê-la e adotá-la</div>
+<canvas id="wc"></canvas>
+<button class="mute" id="mbtn" title="Silenciar vozes">🔊</button>
+<div class="ov" id="ov">
+  <div class="modal">
+    <button class="mc" id="mc">✕</button>
+    <div class="morn">Palavra em extinção</div>
+    <div class="mwrd" id="mwrd"></div>
+    <div class="mdiv"></div>
+    <div class="mmean" id="mmean"></div>
+    <div class="msrc" id="msrc"></div>
+    <div class="af">
+      <label for="an">Seu nome para o certificado de adoção</label>
+      <input type="text" id="an" placeholder="Digite seu nome completo..." autocomplete="off" maxlength="60">
+      <button class="ba" id="ba">✦ &nbsp; Adotar esta palavra &nbsp; ✦</button>
+    </div>
+  </div>
+</div>
+<canvas id="cc"></canvas>
+<footer>Salvem as Palavras &nbsp;·&nbsp; Uma iniciativa do <a href="https://villasboasalbergaria.github.io/quem-disse-oque" target="_blank">Quem Disse o Quê</a> &nbsp;·&nbsp; Curadoria de Rafael Villas Bôas</footer>
+<script>
+let palavras=[],words=[],cur=null,muted=false,mx=-999,my=-999;
+const FONTS=[
+  {f:"'Cinzel',serif",w:'bold'},
+  {f:"'Cormorant Garamond',serif",w:'600'},
+  {f:"'Cormorant Garamond',serif",w:'400',i:true},
+  {f:"'IM Fell English',serif",w:'400'},
+  {f:"'IM Fell English',serif",w:'400',i:true},
+  {f:"'Playfair Display',serif",w:'700'},
+  {f:"'Playfair Display',serif",w:'400',i:true},
+  {f:"'Crimson Pro',serif",w:'300'},
+];
+const COLORS=['#8b3a2a','#c0562a','#9a7b3a','#c4a45a','#6b5d4f','#4a3d30','#7a6040','#a0522d','#3d2b1a','#b5651d','#8b6914','#5c4033'];
+const CALLS=['Eu!','Aqui!','Clica em mim!','Me escolhe!','Não me esqueça!','Eu existo!','Aqui, aqui!','Por favor...','Salva eu!','Ei, ei!','Olha pra mim!','Me adota!','Ainda estou aqui...','Eueueu!','Escolhe eu!','Sou bonita!','Não suma comigo!'];
+const cv=document.getElementById('wc'),ctx=cv.getContext('2d');
+
+async function loadData(){
+  const r=await fetch('palavras.json');
+  palavras=await r.json();
+  resize();buildWords();animate();scheduleVoices();
+  window.addEventListener('resize',()=>{resize();buildWords();});
+  cv.addEventListener('mousemove',onMM);
+  cv.addEventListener('mouseleave',()=>{mx=-999;my=-999;cv.style.cursor='default';});
+  cv.addEventListener('click',onClick);
+}
+
+function resize(){
+  cv.width=window.innerWidth;
+  cv.height=Math.max(560,window.innerHeight*.68);
+}
+
+function buildWords(){
+  words=palavras.map(p=>{
+    const fd=FONTS[Math.floor(Math.random()*FONTS.length)];
+    const sz=13+Math.random()*36;
+    const spd=.15+Math.random()*.5;
+    const ang=Math.random()*Math.PI*2;
+    return{text:p.p,data:p,font:(fd.i?'italic ':'')+fd.w+' '+Math.round(sz)+'px '+fd.f,sz,col:COLORS[Math.floor(Math.random()*COLORS.length)],x:Math.random()*(cv.width-40)+20,y:Math.random()*(cv.height-40)+20,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,w:0,al:.45+Math.random()*.55,ph:Math.random()*Math.PI*2,hov:false};
+  });
+}
+
+function animate(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  const t=performance.now()/1000;
+  let anyHov=false;
+  words.forEach(w=>{
+    w.x+=w.vx; w.y+=w.vy;
+    if(w.w===0){ctx.font=w.font;w.w=ctx.measureText(w.text).width;}
+    if(w.x-w.w/2<6){w.x=w.w/2+6;w.vx=Math.abs(w.vx)*(0.9+Math.random()*.2);}
+    if(w.x+w.w/2>cv.width-6){w.x=cv.width-w.w/2-6;w.vx=-Math.abs(w.vx)*(0.9+Math.random()*.2);}
+    if(w.y-w.sz<6){w.y=w.sz+6;w.vy=Math.abs(w.vy)*(0.9+Math.random()*.2);}
+    if(w.y>cv.height-6){w.y=cv.height-6;w.vy=-Math.abs(w.vy)*(0.9+Math.random()*.2);}
+    w.hov=Math.hypot(mx-w.x,my-w.y)<w.w/2+10;
+    if(w.hov)anyHov=true;
+    const breathe=1+Math.sin(t*1.1+w.ph)*.04;
+    const sc=breathe*(w.hov?1.18:1);
+    ctx.save();ctx.translate(w.x,w.y);ctx.scale(sc,sc);
+    ctx.font=w.font;ctx.textAlign='center';ctx.textBaseline='middle';
+    if(w.hov){ctx.shadowColor=w.col;ctx.shadowBlur=14;ctx.globalAlpha=1;}
+    else{ctx.shadowBlur=0;ctx.globalAlpha=w.al;}
+    ctx.fillStyle=w.hov?'#8b3a2a':w.col;
+    ctx.fillText(w.text,0,0);
+    ctx.restore();
+  });
+  cv.style.cursor=anyHov?'pointer':'default';
+  requestAnimationFrame(animate);
+}
+
+function onMM(e){const r=cv.getBoundingClientRect();mx=(e.clientX-r.left)*(cv.width/r.width);my=(e.clientY-r.top)*(cv.height/r.height);}
+function onClick(e){
+  const r=cv.getBoundingClientRect();
+  const cx=(e.clientX-r.left)*(cv.width/r.width),cy=(e.clientY-r.top)*(cv.height/r.height);
+  for(const w of words){if(Math.hypot(cx-w.x,cy-w.y)<w.w/2+12){openModal(w.data);return;}}
+}
+
+function scheduleVoices(){
+  setInterval(()=>{
+    if(muted||!palavras.length)return;
+    const call=CALLS[Math.floor(Math.random()*CALLS.length)];
+    speak(call,.25+Math.random()*.45,.8+Math.random()*.6,.75+Math.random()*.5);
+  },1600+Math.random()*2400);
+}
+
+function speak(text,vol,rate,pitch){
+  if(muted||!window.speechSynthesis)return;
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='pt-BR';u.volume=vol||.4;u.rate=rate||1;u.pitch=pitch||1;
+  const vs=speechSynthesis.getVoices().filter(v=>v.lang.startsWith('pt'));
+  if(vs.length)u.voice=vs[Math.floor(Math.random()*vs.length)];
+  window.speechSynthesis.speak(u);
+}
+
+document.getElementById('mbtn').addEventListener('click',()=>{
+  muted=!muted;
+  document.getElementById('mbtn').textContent=muted?'🔇':'🔊';
+  if(muted)window.speechSynthesis?.cancel();
+});
+
+function openModal(p){
+  cur=p;
+  document.getElementById('mwrd').textContent=p.p;
+  document.getElementById('mmean').textContent=p.s;
+  document.getElementById('msrc').textContent=p.f?'Fonte: '+p.f:'';
+  document.getElementById('an').value='';
+  document.getElementById('ov').classList.add('open');
+  setTimeout(()=>document.getElementById('an').focus(),100);
+  if(!muted)speak(p.p,.8,.65,1);
+}
+function closeModal(){document.getElementById('ov').classList.remove('open');cur=null;}
+document.getElementById('mc').addEventListener('click',closeModal);
+document.getElementById('ov').addEventListener('click',e=>{if(e.target===document.getElementById('ov'))closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+document.getElementById('an').addEventListener('keydown',e=>{if(e.key==='Enter')genCert();});
+document.getElementById('ba').addEventListener('click',genCert);
+
+function genCert(){
+  const name=document.getElementById('an').value.trim();
+  if(!name||!cur)return;
+  const c2=document.getElementById('cc'),W=1080,H=1080;
+  c2.width=W;c2.height=H;const x=c2.getContext('2d');
+  const bg=x.createLinearGradient(0,0,W,H);
+  bg.addColorStop(0,'#ede5d0');bg.addColorStop(.5,'#f5f0e8');bg.addColorStop(1,'#e8dfc8');
+  x.fillStyle=bg;x.fillRect(0,0,W,H);
+  for(let i=0;i<5000;i++){x.fillStyle=`rgba(80,60,30,${Math.random()*.033})`;x.fillRect(Math.random()*W,Math.random()*H,1,1);}
+  x.strokeStyle='rgba(154,123,58,.4)';x.lineWidth=2;x.strokeRect(40,40,W-80,H-80);
+  x.strokeStyle='rgba(154,123,58,.15)';x.lineWidth=1;x.strokeRect(52,52,W-104,H-104);
+  [[68,68],[W-68,68],[68,H-68],[W-68,H-68]].forEach(([px,py])=>{x.save();x.translate(px,py);x.strokeStyle='rgba(154,123,58,.5)';x.lineWidth=1.5;x.beginPath();x.moveTo(-14,0);x.lineTo(14,0);x.moveTo(0,-14);x.lineTo(0,14);x.stroke();x.beginPath();x.arc(0,0,5,0,Math.PI*2);x.stroke();x.restore();});
+  const hl=y=>{const g=x.createLinearGradient(100,0,W-100,0);g.addColorStop(0,'transparent');g.addColorStop(.5,'rgba(196,164,90,.6)');g.addColorStop(1,'transparent');x.strokeStyle=g;x.lineWidth=1;x.beginPath();x.moveTo(100,y);x.lineTo(W-100,y);x.stroke();};
+  hl(130);
+  x.fillStyle='#9a7b3a';x.font="500 24px 'Cinzel',serif";x.textAlign='center';x.fillText('UMA INICIATIVA DO QUEM DISSE O QUÊ',W/2,110);
+  [W/2-180,W/2,W/2+180].forEach(px=>{x.fillStyle='rgba(154,123,58,.5)';x.beginPath();x.arc(px,153,3,0,Math.PI*2);x.fill();});
+  x.fillStyle='#8b3a2a';x.font="bold 86px 'Cinzel',serif";x.fillText('SALVEM',W/2,252);
+  x.fillStyle='#1a1410';x.font="400 42px 'Cinzel',serif";x.fillText('AS',W/2,304);
+  x.fillStyle='#8b3a2a';x.font="bold 72px 'Cinzel',serif";x.fillText('PALAVRAS',W/2,380);
+  hl(416);
+  x.fillStyle='#6b5d4f';x.font="italic 33px 'Cormorant Garamond',serif";x.fillText('Certificado de Adoção',W/2,476);
+  x.fillStyle='#1a1410';x.font="bold 54px 'Cormorant Garamond',serif";x.fillText(name,W/2,554);
+  const nw=x.measureText(name).width;
+  x.strokeStyle='rgba(154,123,58,.45)';x.lineWidth=1;x.beginPath();x.moveTo(W/2-nw/2,566);x.lineTo(W/2+nw/2,566);x.stroke();
+  x.fillStyle='#6b5d4f';x.font="italic 29px 'Cormorant Garamond',serif";x.fillText('salvou a palavra',W/2,614);
+  x.fillStyle='#8b3a2a';x.font="bold italic 80px 'Cormorant Garamond',serif";x.fillText(cur.p,W/2,706);
+  x.fillStyle='#6b5d4f';x.font="italic 26px 'Cormorant Garamond',serif";
+  const m=cur.s.length>70?cur.s.slice(0,67)+'...':cur.s;x.fillText(m,W/2,758);
+  x.fillStyle='#9a8c7e';x.font="400 22px 'Crimson Pro',serif";
+  x.fillText('e se compromete a usá-la no seu dia a dia, preservando-a da extinção.',W/2,808);
+  hl(846);
+  [W/2-180,W/2,W/2+180].forEach(px=>{x.fillStyle='rgba(154,123,58,.4)';x.beginPath();x.arc(px,871,3,0,Math.PI*2);x.fill();});
+  x.fillStyle='#9a7b3a';x.font="500 21px 'Cinzel',serif";x.fillText('quemdisseoque.com.br',W/2,916);
+  hl(940);
+  const lk=document.createElement('a');
+  lk.download='adocao-'+cur.p.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-')+'.jpg';
+  lk.href=c2.toDataURL('image/jpeg',.95);lk.click();
+  closeModal();
+}
+
+document.getElementById('abtog').addEventListener('click',()=>{document.getElementById('abbody').classList.toggle('open');document.getElementById('abtog').classList.toggle('open');});
+document.addEventListener('click',()=>window.speechSynthesis?.getVoices(),{once:true});
+loadData();
+</script>
+</body>
+</html>
